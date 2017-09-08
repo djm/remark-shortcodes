@@ -38,6 +38,7 @@
     "build-mangle": "esmangle remark-shortcodes.js > remark-shortcodes.min.js",
     "build": "npm run build-bundle && npm run build-mangle",
     "format": "prettier --write 'index.js'",
+    "test-code": "node test.js",
     "test-coverage": "nyc --reporter lcov tape test.js",
     "test": "npm run build && npm run test-coverage"
   }

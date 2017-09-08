@@ -118,9 +118,15 @@ may clash with other markdown syntax and/or other remark plugins.
 
 To run the tests, run:
 
-    node test.js
+    npm run test-code
 
-TravisCI releases on tag to npm.
+To run build, tests & coverage, run:
+
+   npm run test
+
+## Releasing
+
+TravisCI releases on tag to npm & github releases.
 
 ## License
 
