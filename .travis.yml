@@ -4,10 +4,11 @@ node_js:
 - '8.0'
 after_script: bash <(curl -s https://codecov.io/bash)
 deploy:
-  - provider: npm
-    email: mail@djm.org.uk
-    api_key:
-      secure: 4idH51HRSj8b8L32OU7C6CUSLW1GUn7Qe4534upm0UcWakddRgiEqfc5PL/PN2vgC9elLhJaQBymQfHlwlOBXN6vDQyMYGIsWQpeOhKIr3bkPWUHhaL4+nGITReEPXhr6weIjzOIk4MMyhEAZZEacJHMHWm1IhaBzUEL6TxT1tcnlW83LeQNvbX9ys2ybPBXbS5a6g5ikS/PQDsSUIFL46Jq7T1NjsmVvdh5KXO1eo+oQHPCpbo1f+1e5rUuLOJXa5FNXgBPj2QEPcam7+N2/5pDXOI0q3qY2tBEyXdVGrsHmwwtHUDDHd22Y1spbf1F4Jt7YwLKiOUVQhJVQo3IaQhvVjmH+pmNaC1q/uWp2Zw4to+Lu3EqZ+WrfN7devYUU0FnMKFSzsc+bBFyv4anZgOBCVCCE64PiwzGm9iDCSToajF3DVzlRcewaJuIvl9KuKpMkXH8FnbENxk5laZ4MM9VbeSv4cduQQZQVeYJo9Io9/lj8EXmLuW9gAMNRI0VHtWAzwATkg2JioFbiNWIMoeczEgzXUmaNgRyBt0TrjMsiwDsKEsRf51Ppv7kHe7qPVMt8E5AlXYzykKhCQwxZx/t0d4Pwt+MnLiAOHCCq7CZJ9tiKq+7+4IMCC+3JnnHqldfVxRVVAEM5toh0MCPuxYxcQVA/Iup6Ix1k0BNCHI=
-    on:
-      tags: true
-      node: '8.0'
+  provider: npm
+  email: mail@djm.org.uk
+  api_key:
+    secure: VnS5vTz721ZKtpgoP/Z3zbY0eTa7ya3glRWwdYGkg7AboIbbCxtRK7w6oGWzl4lMzYr11P4VCim5gcT1G5crOnVVkm9zVR84KoANndmC6GZbmA4ECW25OYpAeQgjyFGgCSwY1Wd3P9yUZbk7xSYJTQ8GZrhXp8e29oRaRWObAEzdXU01WlkWLdAZm49vcyed3mh8Y7OgZS/+MsKDe2p+zPhX182ufq2a1t6JCe3fG2Kbr/4agrz8H8d5RQLuz+EOJx91nXKaySJ39VZj5E0Cq/TVJU7a7X2jXZwqeEYoM+IHjZ2QRsnrmozRt6Nf8eNT2vgf1eJr4W2Mo3G1eL4wRA1+g6/e63yzvYKBLmgwSTLCjaRdI2ATL/pvQluL1y3EkNI6aoiKBevlDAPigkf8lQ4sj/4rvA09UmjC7296lh8F3n7dIPrPnE83ICG5IVFirsN2+3dZgbN4Xbxohghea9/o5FqPR1z8f3zG3eUxn220ahym/XnwXE7b4gSBH4Pj8+xoHTQQ+0ieWGu7z15vJQxQUij6+H7xfEWeX2sQ1o3KyKU7HBqa4uyKO2EwiqWzziMMoHT19QYlSBVAyZmS+uS4eXorBcfHOZa7qQf9zclstz7HUGmFBU/vj+8iFx0V/Xp9AKAkKLI7mX+1XV3BxFA+J2kZ6tKsl7S1iMxb1aM=
+  on:
+    tags: true
+    repo: djm/remark-shortcodes
+    node: '8.0'
