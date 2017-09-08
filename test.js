@@ -90,3 +90,28 @@ test("test block level shortcode with custom start/end blocks", function(t) {
   testAST(t, { startBlock: "{{%", endBlock: "%}}" }, markdown, expected);
   t.end();
 });
+
+test("test multiple block level shortcodes", function(t) {
+  var markdown = '[[ Youtube id=3 ]]\n\nDrum and Bass\n\n[[ Vimeo id="4" ]]';
+  var expected = {
+    type: "root",
+    children: [
+      {
+        type: "shortcode",
+        identifier: "Youtube",
+        attributes: { id: "3" }
+      },
+      {
+        type: "paragraph",
+        children: [{ type: "text", value: "Drum and Bass" }]
+      },
+      {
+        type: "shortcode",
+        identifier: "Vimeo",
+        attributes: { id: "4" }
+      }
+    ]
+  };
+  testAST(t, {}, markdown, expected);
+  t.end();
+});
