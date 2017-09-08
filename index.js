@@ -13,42 +13,23 @@
    To apply transformations from the shortcodes to HTML or other
    formats, please see the example in the README.
 
-
    e.g
-        // No arguments
+        // with no attributes
         [[ ShortcodeNameA ]]
 
-        // One argument
-        [[ ShortcodeNameB exampleAttribute="a" ]]
-
-        // Multiple argument
+        // with multiple attributes
         [[ ShortcodeNameC a="b" c="d" ]]
 
-        // Custom Start/End Blocks
+        // with custom start/end Blocks
         {{% ShortcodeNameD a="1" c="2" %}}
 
         // An example node format for a shortcode with attributes
         {
           type: 'shortcode',
-          data: {
-              name: 'ShortcodeNameC',
-              attributes: {
-                  a: '1',
-                  c: '2'
-              }
-          },
-          position: {
-              start: {
-                  line: 3,
-                  column: 1,
-                  offset: 15
-              },
-              end: {
-                  line: 3,
-                  column: 19,
-                  offset: 33
-              },
-              indent: []
+          identifier: 'ShortcodeNameC',
+          attributes: {
+              a: '1',
+              c: '2'
           }
         }
 
