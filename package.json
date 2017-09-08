@@ -25,7 +25,20 @@
     "index.js"
   ],
   "devDependencies": {
+    "browserify": "^14.4.0",
+    "esmangle": "^1.0.1",
+    "nyc": "^11.2.1",
+    "prettier": "^1.6.1",
     "remark": "^8.0.0",
+    "remark-cli": "^4.0.0",
     "tape": "^4.8.0"
+  },
+  "scripts": {
+    "build-bundle": "browserify index.js -s remarkShortcodes > remark-shortcodes.js",
+    "build-mangle": "esmangle remark-shortcodes.js > remark-shortcodes.min.js",
+    "build": "npm run build-bundle && npm run build-mangle",
+    "format": "prettier --write 'src/**/*.js'",
+    "test-coverage": "nyc --reporter lcov tape test.js",
+    "test": "npm run build && npm run test-coverage"
   }
 }

@@ -1,8 +1,11 @@
 # Javascript
+remark-shortcodes.js
+remark-shortcodes.min.js
 node_modules/
 
 # Testing
 coverage/
+.nyc_output/
 
 # OS
 .DS_Store

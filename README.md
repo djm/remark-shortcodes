@@ -2,7 +2,7 @@
 
 A custom Markdown syntax parser for [**remark**][remark] that adds support for shortcodes.
 
-***What are shortcodes?*** They are a way to provide hooks for macros and/or
+**_What are shortcodes?_** They are a way to provide hooks for macros and/or
 template partials inside a markdown file. They consist of start & end blocks,
 in between which the shortcode has a name defined and an optional set of
 key:value attributes in HTML style. They can look like this:
@@ -19,7 +19,7 @@ you can set them as such:
 {{< MailchimpForm id="chfk2" >}}
 ```
 
-***Why use them?*** Because sometimes you'd like to insert content inline
+**_Why use them?_** Because sometimes you'd like to insert content inline
 without copy pasting raw HTML in to your Markdown file. The copy paste
 approach means that hard-to-modify code is littered throughout your
 content and is therefore very hard to maintain; whereas the shortcode
@@ -74,7 +74,7 @@ var markdown = 'Example paragraph\n\n{{> MailchimpForm id="chfk2" <}}'
 
 var tree = unified()
   .use(parse)
-	// Plugin inserted below, with custom options for start/end blocks.
+  // Plugin inserted below, with custom options for start/end blocks.
   .use(shortcodes, {startBlock: "{{>", endBlock: "<}}"})
   // Turn off position output for legibility below.
   .data('settings', {position: false})
@@ -87,18 +87,18 @@ Running `node example` yields:
 
 ```js
 {
-	type: "root",
-	children: [
-		{
-			type: "paragraph",
-			children: [{ type: "text", value: "Example paragraph" }]
-		},
-		{
-			type: "shortcode",
-			identifier: "MailchimpForm",
-			attributes: { id: "chfk2" }
-		}
-	]
+  type: "root",
+  children: [
+    {
+      type: "paragraph",
+      children: [{ type: "text", value: "Example paragraph" }]
+    },
+    {
+      type: "shortcode",
+      identifier: "MailchimpForm",
+      attributes: { id: "chfk2" }
+    }
+  ]
 }
 ```
 
@@ -108,8 +108,8 @@ Running `node example` yields:
 
 Where options support the keys:
 
-* `startBlock`: the start block to look for. Default: `[[`.
-* `endBlock`: the end block to look for. Default: `]]`.
+- `startBlock`: the start block to look for. Default: `[[`.
+- `endBlock`: the end block to look for. Default: `]]`.
 
 NB: Be careful when using custom start/end blocks, your choices
 may clash with other markdown syntax and/or other remark plugins.
@@ -118,9 +118,7 @@ may clash with other markdown syntax and/or other remark plugins.
 
 To run the tests, run:
 
-```
-node test.js
-```
+    node test.js
 
 TravisCI releases on tag to npm.
 
@@ -130,7 +128,7 @@ TravisCI releases on tag to npm.
 
 With thanks to [woorm][woorm] et. al for [**remark**][remark].
 
-<!-- Definitions -->
+<!-- Links -->
 
 [travis-badge]: https://img.shields.io/travis/djm/remark-shortcodes/master.svg
 
