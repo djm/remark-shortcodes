@@ -128,6 +128,10 @@ To run build, tests & coverage, run:
 
 TravisCI releases on tag to npm & github releases.
 
+* Bump version in package.json
+* Commit and tag with version number (`git tag -a v0.1.x -m v0.1.x`)
+* Push
+
 ## License
 
 [MIT](LICENSE) © [Darian Moody](http://djm.org.uk)
