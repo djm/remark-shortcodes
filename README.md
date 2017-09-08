@@ -1,4 +1,4 @@
-# remark-shortcodes [![Build Status][travis-badge]][travis] [![Coverage Status][codecov-badge]][codecov]
+# remark-shortcodes [![NPM Package][npm-package-badge]][npm-package] [![Build Status][travis-badge]][travis] [![Coverage Status][codecov-badge]][codecov]
 
 A custom Markdown syntax parser for [**remark**][remark] that adds support for shortcodes.
 
@@ -139,6 +139,10 @@ TravisCI releases on tag to npm & github releases.
 With thanks to [woorm][woorm] et. al for [**remark**][remark].
 
 <!-- Links -->
+
+[npm-package-badge]: https://img.shields.io/npm/v/remark-shortcodes.svg
+
+[npm-package]: https://www.npmjs.org/package/remark-shortcodes
 
 [travis-badge]: https://img.shields.io/travis/djm/remark-shortcodes/master.svg
 
