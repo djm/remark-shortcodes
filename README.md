@@ -40,11 +40,11 @@ in its Markdown AST (MDAST). The representation is as follows:
 
 ```js
 {
-	type: "shortcode",
-	data: {
-		name: "MailchimpForm",
-		attributes: { id: "chfk2" }
-	}
+  type: "shortcode",
+  data: {
+    name: "MailchimpForm",
+    attributes: { id: "chfk2" }
+  }
 }
 ```
 
@@ -128,9 +128,9 @@ To run build, tests & coverage, run:
 
 TravisCI releases on tag to npm & github releases.
 
-* Bump version in package.json
-* Commit and tag with version number (`git tag -a v0.1.x -m v0.1.x`)
-* Push
+- Bump version in package.json
+- Commit and tag with version number (`git tag -a v0.1.x -m v0.1.x`)
+- Push
 
 ## License
 
