@@ -95,7 +95,8 @@ Running `node example` yields:
 		},
 		{
 			type: "shortcode",
-			data: { name: "MailchimpForm", attributes: { id: "chfk2" } }
+			identifier: "MailchimpForm",
+			attributes: { id: "chfk2" }
 		}
 	]
 }
@@ -109,6 +110,9 @@ Where options support the keys:
 
 * `startBlock`: the start block to look for. Default: `[[`.
 * `endBlock`: the end block to look for. Default: `]]`.
+
+NB: Be careful when using custom start/end blocks, your choices
+may clash with other markdown syntax and/or other remark plugins.
 
 ## Testing
 
@@ -124,7 +128,7 @@ TravisCI releases on tag to npm.
 
 [MIT](LICENSE) © [Darian Moody](http://djm.org.uk)
 
-With thanks to [woorm][] et. al for [**remark**][].
+With thanks to [woorm][woorm] et. al for [**remark**][remark].
 
 <!-- Definitions -->
 
@@ -139,6 +143,8 @@ With thanks to [woorm][] et. al for [**remark**][].
 [wordpress-shortcodes]: https://codex.wordpress.org/shortcode
 
 [hugo-shortcodes]: https://gohugo.io/content-management/shortcodes/
+
+[gatsby-remark-shortcodes]: https://gitub.com/djm/gatsby-remark-shortcodes
 
 [npm]: https://docs.npmjs.com/cli/install
 
