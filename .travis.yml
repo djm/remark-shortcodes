@@ -15,7 +15,9 @@ deploy:
   - provider: releases
     api_key:
       secure: T4n0dMd1sciio4mu4LPVB8aSto00FPlup+7Bhb1EO654W8Vt4153Fo6tb2XAKxX1SjZ6iDwteYKCcVvWoOq1clkPka2RRXLb0QOgrgHRVeX8NIfAR3ntrXUr3pkJ1rPIEKT7ZHD+vuqJEK2ihgl+ibtvtJGJHOxgNyxEPSaLXAoPH0IB4suggYg+5/RW1M9HbDD7uyTO0zxjZ9ozCwZKZpl7y6yq+rAUXG88xp8rmPtapkh498JRrsqDOiyX94bzlxxA24mkMf9AkeonEQf605Ri6DfewTAIdVc4jSMlrcQ/tugXGszJo6oMudaVHDw/TRVFNWtlnqYYYdsIjvMCN7Ek/f6JGAiBCKEJFWygVJnGb8OYnFOHFfb+DhG1jR/GukVfbW76qP1WIC/9IJBGNCWo44dCsN/f5Qj9NPqliHuMf1tw52vWndk6BqMRE72059QXCXox+chp9jUhrZ/zQGWf6DDpt9MUYPdWRjb+6DpGJdAM1KeV8w8PY2VP6EfreG97AwxeIlJIEm5rj6s8HHMvrl4tVn0vO6VR9agYPRTuEgXjx3tOlnImmaMiyeIoguVbaIIT8Uw5/3/dIAYEpXxDJaJR4uUuU4fg+Fj0ZYoKyrLb5Z2rGGs6P5WJkJw2pEFOOK6AfIHE71QxZCX5zirgOe94rFaYzjfs6ivSEY8=
-    file: remark-shortcodes.js
+    file:
+      - remark-shortcodes.js
+      - remark-shortcodes.min.js
     on:
       tags: true
       repo: djm/remark-shortcodes
