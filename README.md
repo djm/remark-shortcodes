@@ -36,7 +36,8 @@ please feel free! Everyone is welcome.
 
 This is just the parser component; it allows [remark][remark] to understand
 the shortcodes at the block level and convert them to a representation
-in its Markdown AST (MDAST). The representation is as follows:
+in its Markdown AST (MDAST). Given either example above, the representation would
+end up as follows:
 
 ```js
 {
