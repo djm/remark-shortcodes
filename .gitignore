@@ -1,0 +1,8 @@
+# Javascript
+node_modules/
+
+# Testing
+coverage/
+
+# OS
+.DS_Store

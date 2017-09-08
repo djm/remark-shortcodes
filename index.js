@@ -1,0 +1,183 @@
+"use strict";
+
+/*
+   remark-shortcodes
+
+   A remark plugin to allow custom block-level Wordpress/Hugo-like
+   shortcodes to be parsed as part of the Remark Markdown AST. Note
+   that this plugin does not apply any transformations, but simply
+   parses the shortcodes and adds the relevant data to the AST. The
+   start & end blocks are configurable, but the inner shortcode
+   including the name and the key="value" pairs must be as expected.
+
+   To apply transformations from the shortcodes to HTML or other
+   formats, please see the example in the README.
+
+
+   e.g
+        // No arguments
+        [[ ShortcodeNameA ]]
+
+        // One argument
+        [[ ShortcodeNameB exampleAttribute="a" ]]
+
+        // Multiple argument
+        [[ ShortcodeNameC a="b" c="d" ]]
+
+        // Custom Start/End Blocks
+        {{% ShortcodeNameD a="1" c="2" %}}
+
+        // An example node format for a shortcode with attributes
+        {
+          type: 'shortcode',
+          data: {
+              name: 'ShortcodeNameC',
+              attributes: {
+                  a: '1',
+                  c: '2'
+              }
+          },
+          position: {
+              start: {
+                  line: 3,
+                  column: 1,
+                  offset: 15
+              },
+              end: {
+                  line: 3,
+                  column: 19,
+                  offset: 33
+              },
+              indent: []
+          }
+        }
+
+   With thanks to official remark plugins:
+   https://github.com/wooorm/remark-breaks/blob/master/index.js
+   https://github.com/wooorm/remark-gemoji/blob/master/index.js
+*/
+
+module.exports = shortcodes;
+
+function shortcodes(options) {
+  var startBlock = (options || {}).startBlock || "[[";
+  var endBlock = (options || {}).endBlock || "]]";
+
+  var parser = this.Parser;
+
+  if (!isRemarkParser(parser)) {
+    throw new Error("Missing parser, cannot attach `remark-shortcodes`");
+  }
+
+  var proto = parser.prototype;
+  proto.blockTokenizers.shortcode = shortcodeTokenizer;
+  proto.blockMethods.splice(proto.blockMethods.indexOf("html"), 0, "shortcode");
+
+  function locator(value, fromIndex) {
+    return value.indexOf(startBlock, fromIndex);
+  }
+
+  function shortcodeTokenizer(eat, value, silent) {
+    var entireShortcode;
+    var innerShortcode;
+    var parsedShortcode;
+    var endPosition;
+    var endBlockPosition;
+
+    if (!value.startsWith(startBlock)) return;
+
+    endBlockPosition = value.indexOf(endBlock, startBlock.length);
+    if (endBlockPosition === -1) return;
+
+    endPosition = endBlockPosition + endBlock.length;
+    entireShortcode = value.slice(0, endPosition);
+    innerShortcode = value.slice(startBlock.length, endBlockPosition);
+
+    parsedShortcode = parseShortcode(innerShortcode);
+
+    // If there is no parsed data, something fishy is up - return nothing.
+    if (!parsedShortcode) return;
+
+    /* Exit with true in silent mode after successful parse - never used (yet) */
+    /* istanbul ignore if */
+    if (silent) {
+      return true;
+    }
+
+    return eat(entireShortcode)({
+      type: "shortcode",
+      identifier: parsedShortcode.identifier,
+      attributes: parsedShortcode.attributes
+    });
+  }
+  shortcodeTokenizer.locator = locator;
+}
+
+/**
+ * Parses the inner shortcode to extract shortcode name & key-value attributes.
+ * @param {string} innerShortcode - Extracted shortcode from between the start & end blocks.
+ */
+function parseShortcode(innerShortcode) {
+  var trimmedInnerShortcode = innerShortcode.trim();
+
+  // If no shortcode, it was blank between the blocks - return nothing.
+  if (!trimmedInnerShortcode) return;
+
+  // If no whitespace, then shortcode is just name with no attributes.
+  if (!hasWhiteSpace(trimmedInnerShortcode)) {
+    return { identifier: trimmedInnerShortcode, attributes: {} };
+  }
+
+  var splitShortcode = trimmedInnerShortcode.match(/^(\S+)\s(.*)/).slice(1);
+  var shortcodeName = splitShortcode[0];
+  var attributeString = splitShortcode[1];
+  var attributes = parseShortcodeAttributes(attributeString);
+
+  // If no attributes parsed, something went wrong - return nothing.
+  if (!attributes) return;
+
+  return {
+    identifier: shortcodeName,
+    attributes: attributes
+  };
+}
+
+/**
+ * Discovers if a string contains any whitespace.
+ * @param {string} s - the string to test for whitespace.
+ */
+function hasWhiteSpace(s) {
+  return /\s/g.test(s);
+}
+
+/**
+ * Parses the key/value attributes from the attribute string.
+ * @param {string} attributeString - e.g 'a="b" c=2 e="3"'
+ */
+function parseShortcodeAttributes(attributeString) {
+  var attributes = {};
+  var attrMatch = attributeString
+    .trim()
+    .match(/(?:[\w-]*=\s*(?:(?:"[^"]*")|(?:'[^']*')|[^}\s]+))/g);
+
+  if (attrMatch) {
+    attrMatch.map(function(item) {
+      var split = item.split("=");
+      var key = split[0].trim();
+      // Strip surrounding quotes from value, if they exist.
+      var val = split[1].trim().replace(/^"(.*)"$/, "$1");
+      attributes[key] = val;
+    });
+  }
+  return attributes;
+}
+
+function isRemarkParser(parser) {
+  return Boolean(
+    parser &&
+      parser.prototype &&
+      parser.prototype.inlineTokenizers &&
+      parser.prototype.inlineTokenizers.break &&
+      parser.prototype.inlineTokenizers.break.locator
+  );
+}

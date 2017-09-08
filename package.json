@@ -1,0 +1,31 @@
+{
+  "name": "remark-shortcodes",
+  "version": "1.0.0",
+  "description": "Shortcode parser plugin for Remark",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/djm/remark-shortcodes.git"
+  },
+  "keywords": [
+    "markdown",
+    "remark",
+    "shortcodes"
+  ],
+  "author": "Darian Moody <mail@djm.org.uk>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/djm/remark-shortcodes"
+  },
+  "homepage": "https://github.com/djm/remark-shortcodes",
+  "peerDependencies": {
+    "remark-parse": ">=3.0.0"
+  },
+  "files": [
+    "index.js"
+  ],
+  "devDependencies": {
+    "remark": "^8.0.0",
+    "tape": "^4.8.0"
+  }
+}
