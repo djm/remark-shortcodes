@@ -9,3 +9,6 @@ coverage/
 
 # OS
 .DS_Store
+
+# Editors
+*.sw[o-p]
