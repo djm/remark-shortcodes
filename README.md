@@ -41,10 +41,8 @@ in its Markdown AST (MDAST). The representation is as follows:
 ```js
 {
   type: "shortcode",
-  data: {
-    name: "MailchimpForm",
-    attributes: { id: "chfk2" }
-  }
+  identifier: "MailchimpForm",
+  attributes: { id: "chfk2" }
 }
 ```
 
