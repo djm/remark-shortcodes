@@ -122,7 +122,7 @@ To run the tests, run:
 
 To run build, tests & coverage, run:
 
-   npm run test
+    npm run test
 
 ## Releasing
 
