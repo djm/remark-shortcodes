@@ -1,6 +1,6 @@
 {
   "name": "remark-shortcodes",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Shortcode parser plugin for Remark",
   "main": "index.js",
   "repository": {
