@@ -69,9 +69,9 @@ Yields:
 
 ```json
 {
-  type: "shortcode",
-  identifier: "MailchimpForm",
-  attributes: { id: "chfk2" }
+  "type": "shortcode",
+  "identifier": "MailchimpForm",
+  "attributes": { "id": "chfk2" }
 }
 ```
 
@@ -107,18 +107,18 @@ console.dir(tree, {depth: null});
 
 Running `node example` yields:
 
-```js
+```json
 {
-  type: "root",
-  children: [
+  "type": "root",
+  "children": [
     {
-      type: "paragraph",
-      children: [{ type: "text", value: "Example paragraph" }]
+      "type": "paragraph",
+      "children": [{ "type": "text", "value": "Example paragraph" }]
     },
     {
-      type: "shortcode",
-      identifier: "MailchimpForm",
-      attributes: { id: "chfk2" }
+      "type": "shortcode",
+      "identifier": "MailchimpForm",
+      "attributes": { "id": "chfk2" }
     }
   ]
 }
