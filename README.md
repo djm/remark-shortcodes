@@ -7,7 +7,7 @@ template partials inside a markdown file. They consist of start & end blocks,
 in between which the shortcode has a name defined and an optional set of
 key:value attributes in HTML style. They can look like this:
 
-```markdown
+```md
 The example below uses the default start & end blocks that
 this parser ships with:
 
@@ -32,25 +32,48 @@ like Hugo does - but can actually be used for the simpler partials. It
 was made for my use, but if you'd like to extend it to support more cases,
 please feel free! Everyone is welcome.
 
-## Not a transformer
+## A parser, not a transformer
 
-This is just the parser component; it allows [remark][remark] to understand
-the shortcodes at the block level and convert them to a representation
-in its Markdown AST (MDAST). Given either example above, the representation would
-end up as follows:
+**This plugin is just a parser and not a transformer**; meaning that it allows
+[remark][remark] to understand the shortcodes at the block level and converts
+them to a representation in its Markdown AST (MDAST) - that is where it stops.
 
-```js
+To transform that generated AST into HTML will require something more specific
+to your project: your plugin will have to visit the AST, gather the information
+off the correct node and then render a template partial in whatever way you
+please.
+
+For some more advice on building a transformer from these new AST blocks, please
+take a look at Remarks other plugins to get an idea of what you will need to do.
+
+## AST Block: `Shortcode`
+
+`Shortcode` ([`Node`][node]) is a simple node that has an identifier and an
+optional object with string values, respresenting the attributes parsed.
+
+```idl
+interface Shortcode <: Node {
+  type: "shortcode";
+  identifier: string;
+  attributes: { key: string, ...}
+}
+```
+
+For example, the following markdown:
+
+```md
+[[ MailchimpForm id="chfk2" ]]
+```
+
+Yields:
+
+```json
 {
   type: "shortcode",
   identifier: "MailchimpForm",
   attributes: { id: "chfk2" }
 }
 ```
-
-To transform this into to HTML via providing your own templates
-will require something more specific to your project. If you are
-using Gatsby, or you'd like to see an implementation of a transformer,
-please see the [gatsby-remark-shortcodes][gatsby-remark-shortcodes] repo.
 
 ## Installation
 
@@ -158,6 +181,8 @@ With thanks to [woorm][woorm] et. al for [**remark**][remark].
 [gatsby-remark-shortcodes]: https://gitub.com/djm/gatsby-remark-shortcodes
 
 [npm]: https://docs.npmjs.com/cli/install
+
+[node]: https://github.com/syntax-tree/unist#node
 
 [remark]: https://github.com/wooorm/remark
 
