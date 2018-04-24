@@ -115,3 +115,24 @@ test("test multiple block level shortcodes", function(t) {
   testAST(t, {}, markdown, expected);
   t.end();
 });
+
+test("test attributes with equals in value", function(t) {
+  var markdown =
+    'Drum and Bass\n\n[[ Youtube href="https://youtube.com?q=test" ]]';
+  var expected = {
+    type: "root",
+    children: [
+      {
+        type: "paragraph",
+        children: [{ type: "text", value: "Drum and Bass" }]
+      },
+      {
+        type: "shortcode",
+        identifier: "Youtube",
+        attributes: { href: "https://youtube.com?q=test" }
+      }
+    ]
+  };
+  testAST(t, {}, markdown, expected);
+  t.end();
+});
