@@ -144,9 +144,12 @@ function parseShortcodeAttributes(attributeString) {
   if (attrMatch) {
     attrMatch.map(function(item) {
       var split = item.split("=");
-      var key = split[0].trim();
+      var key = split.shift().trim();
       // Strip surrounding quotes from value, if they exist.
-      var val = split[1].trim().replace(/^"(.*)"$/, "$1");
+      var val = split
+        .join("=")
+        .trim()
+        .replace(/^"(.*)"$/, "$1");
       attributes[key] = val;
     });
   }
