@@ -8,22 +8,49 @@ var test = require("tape");
 var remark = require("remark");
 var shortcodes = require("./index.js");
 
-/* Tests whether given markdown is rendered to correct markdown AST
+/**
+ * Tests whether given markdown is rendered to correct markdown AST and vice versa
  * @param {tape} t - the tape test harness object.
- * @param {string} markdown - the md string to render to AST.
- * @param {string} expectedAST - the AST expected from the md.
+ * @param {string} inputMarkdown - denormalized input text.
+ * @param {string} outputMarkdown - normalized output text.
+ * @param {string} ast - the AST expected from the md.
  */
-function testAST(t, pluginOptions, markdown, expectedAST) {
-  var tree = remark()
+function tester(t, pluginOptions, inputMarkdown, outputMarkdown, ast) {
+  var tree1 = remark()
     .use(shortcodes, pluginOptions)
     .data("settings", { pedantic: true, position: false })
-    .parse(markdown);
-  t.deepEqual(tree, expectedAST);
+    .parse(inputMarkdown);
+  t.deepEqual(
+    tree1,
+    ast,
+    "ast should be parsed correctly from denormalized markdown"
+  );
+
+  var tree2 = remark()
+    .use(shortcodes, pluginOptions)
+    .data("settings", { pedantic: true, position: false })
+    .parse(outputMarkdown);
+  t.deepEqual(
+    tree2,
+    ast,
+    "ast should be parsed correctly from normalized markdown"
+  );
+
+  var string = remark()
+    .use(shortcodes, pluginOptions)
+    .data("settings", { pedantic: true, position: false })
+    .stringify(ast);
+  t.is(
+    string,
+    outputMarkdown,
+    "normalized markdown should be generated from ast"
+  );
 }
 
 test("test block level shortcode without attributes", function(t) {
-  var markdown = "Drum and Bass\n\n[[ Youtube ]]";
-  var expected = {
+  var inputMarkdown = "Drum and Bass\n\n[[ Youtube ]]";
+  var outputMarkdown = "Drum and Bass\n\n[[ Youtube ]]\n";
+  var ast = {
     type: "root",
     children: [
       {
@@ -37,14 +64,16 @@ test("test block level shortcode without attributes", function(t) {
       }
     ]
   };
-  testAST(t, {}, markdown, expected);
+  tester(t, {}, inputMarkdown, outputMarkdown, ast);
   t.end();
 });
 
 test("test block level shortcode with attributes", function(t) {
-  var markdown =
+  var inputMarkdown =
     'Drum and Bass\n\n[[ Youtube id=3 share_code="abc" share-code="def" ]]\n\nTest sentence';
-  var expected = {
+  var outputMarkdown =
+    'Drum and Bass\n\n[[ Youtube id="3" share_code="abc" share-code="def" ]]\n\nTest sentence\n';
+  var ast = {
     type: "root",
     children: [
       {
@@ -62,14 +91,16 @@ test("test block level shortcode with attributes", function(t) {
       }
     ]
   };
-  testAST(t, {}, markdown, expected);
+  tester(t, {}, inputMarkdown, outputMarkdown, ast);
   t.end();
 });
 
 test("test block level shortcode with custom start/end blocks", function(t) {
-  var markdown =
+  var inputMarkdown =
     'Drum and Bass\n\n{{% Youtube id=3 share-code="abc" %}}\n\nTest sentence';
-  var expected = {
+  var outputMarkdown =
+    'Drum and Bass\n\n{{% Youtube id="3" share-code="abc" %}}\n\nTest sentence\n';
+  var ast = {
     type: "root",
     children: [
       {
@@ -87,13 +118,22 @@ test("test block level shortcode with custom start/end blocks", function(t) {
       }
     ]
   };
-  testAST(t, { startBlock: "{{%", endBlock: "%}}" }, markdown, expected);
+  tester(
+    t,
+    { startBlock: "{{%", endBlock: "%}}" },
+    inputMarkdown,
+    outputMarkdown,
+    ast
+  );
   t.end();
 });
 
 test("test multiple block level shortcodes", function(t) {
-  var markdown = '[[ Youtube id=3 ]]\n\nDrum and Bass\n\n[[ Vimeo id="4" ]]';
-  var expected = {
+  var inputMarkdown =
+    '[[ Youtube id=3 ]]\n\nDrum and Bass\n\n[[ Vimeo id="4" ]]';
+  var outputMarkdown =
+    '[[ Youtube id="3" ]]\n\nDrum and Bass\n\n[[ Vimeo id="4" ]]\n';
+  var ast = {
     type: "root",
     children: [
       {
@@ -112,14 +152,16 @@ test("test multiple block level shortcodes", function(t) {
       }
     ]
   };
-  testAST(t, {}, markdown, expected);
+  tester(t, {}, inputMarkdown, outputMarkdown, ast);
   t.end();
 });
 
 test("test attributes with equals in value", function(t) {
-  var markdown =
+  var inputMarkdown =
     'Drum and Bass\n\n[[ Youtube href="https://youtube.com?q=test" ]]';
-  var expected = {
+  var outputMarkdown =
+    'Drum and Bass\n\n[[ Youtube href="https://youtube.com?q=test" ]]\n';
+  var ast = {
     type: "root",
     children: [
       {
@@ -133,6 +175,6 @@ test("test attributes with equals in value", function(t) {
       }
     ]
   };
-  testAST(t, {}, markdown, expected);
+  tester(t, {}, inputMarkdown, outputMarkdown, ast);
   t.end();
 });

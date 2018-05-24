@@ -44,15 +44,20 @@ function shortcodes(options) {
   var startBlock = (options || {}).startBlock || "[[";
   var endBlock = (options || {}).endBlock || "]]";
 
-  var parser = this.Parser;
-
-  if (!isRemarkParser(parser)) {
+  if (!isRemarkParser(this.Parser)) {
     throw new Error("Missing parser, cannot attach `remark-shortcodes`");
   }
 
-  var proto = parser.prototype;
-  proto.blockTokenizers.shortcode = shortcodeTokenizer;
-  proto.blockMethods.splice(proto.blockMethods.indexOf("html"), 0, "shortcode");
+  var parser = this.Parser.prototype;
+  var compiler = this.Compiler.prototype;
+
+  parser.blockTokenizers.shortcode = shortcodeTokenizer;
+  parser.blockMethods.splice(
+    parser.blockMethods.indexOf("html"),
+    0,
+    "shortcode"
+  );
+  compiler.visitors.shortcode = shortcodeCompiler;
 
   function locator(value, fromIndex) {
     return value.indexOf(startBlock, fromIndex);
@@ -92,6 +97,21 @@ function shortcodes(options) {
     });
   }
   shortcodeTokenizer.locator = locator;
+
+  function shortcodeCompiler(node) {
+    var attributes = "";
+    var keys = Object.keys(node.attributes || {});
+    if (keys.length > 0) {
+      attributes =
+        " " +
+        keys
+          .map(function(key) {
+            return key + '="' + node.attributes[key] + '"';
+          })
+          .join(" ");
+    }
+    return startBlock + " " + node.identifier + attributes + " " + endBlock;
+  }
 }
 
 /**
