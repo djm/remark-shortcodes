@@ -32,20 +32,6 @@ like Hugo does - but can actually be used for the simpler partials. It
 was made for my use, but if you'd like to extend it to support more cases,
 please feel free! Everyone is welcome.
 
-## A parser, not a transformer
-
-**This plugin is just a parser and not a transformer**; meaning that it allows
-[remark][remark] to understand the shortcodes at the block level and converts
-them to a representation in its Markdown AST (MDAST) - that is where it stops.
-
-To transform that generated AST into HTML will require something more specific
-to your project: your plugin will have to visit the AST, gather the information
-off the correct node and then render a template partial in whatever way you
-please.
-
-For some more advice on building a transformer from these new AST blocks, please
-take a look at Remarks other plugins to get an idea of what you will need to do.
-
 ## AST Block: `Shortcode`
 
 `Shortcode` ([`Node`][node]) is a simple node that has an identifier and an
@@ -122,6 +108,43 @@ Running `node example` yields:
     }
   ]
 }
+```
+
+Say `example2.js` looks as follows:
+
+```javascript
+var unified = require('unified');
+var parse = require('remark-parse');
+var shortcodes = require('remark-shortcodes');
+
+var ast = {
+  "type": "root",
+  "children": [
+    {
+      "type": "paragraph",
+      "children": [{ "type": "text", "value": "Example paragraph" }]
+    },
+    {
+      "type": "shortcode",
+      "identifier": "MailchimpForm",
+      "attributes": { "id": "chfk2" }
+    }
+  ]
+};
+
+var tree = unified()
+  .use(parse)
+  // Plugin inserted below, with custom options for start/end blocks.
+  .use(shortcodes, {startBlock: "{{>", endBlock: "<}}"})
+  .stringify(ast);
+
+console.log(tree);
+```
+
+Running `node example2` yields:
+
+```markdown
+Example paragraph\n\n{{> MailchimpForm id="chfk2" <}}
 ```
 
 ## API
