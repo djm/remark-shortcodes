@@ -44,20 +44,19 @@ function shortcodes(options) {
   var startBlock = (options || {}).startBlock || "[[";
   var endBlock = (options || {}).endBlock || "]]";
 
-  if (!isRemarkParser(this.Parser)) {
-    throw new Error("Missing parser, cannot attach `remark-shortcodes`");
+  if (isRemarkParser(this.Parser)) {
+    var parser = this.Parser.prototype;
+    parser.blockTokenizers.shortcode = shortcodeTokenizer;
+    parser.blockMethods.splice(
+      parser.blockMethods.indexOf("html"),
+      0,
+      "shortcode"
+    );
   }
-
-  var parser = this.Parser.prototype;
-  var compiler = this.Compiler.prototype;
-
-  parser.blockTokenizers.shortcode = shortcodeTokenizer;
-  parser.blockMethods.splice(
-    parser.blockMethods.indexOf("html"),
-    0,
-    "shortcode"
-  );
-  compiler.visitors.shortcode = shortcodeCompiler;
+  if (isRemarkCompiler(this.Compiler)) {
+    var compiler = this.Compiler.prototype;
+    compiler.visitors.shortcode = shortcodeCompiler;
+  }
 
   function locator(value, fromIndex) {
     return value.indexOf(startBlock, fromIndex);
@@ -184,4 +183,8 @@ function isRemarkParser(parser) {
       parser.prototype.inlineTokenizers.break &&
       parser.prototype.inlineTokenizers.break.locator
   );
+}
+
+function isRemarkCompiler(compiler) {
+  return Boolean(compiler && compiler.prototype);
 }
