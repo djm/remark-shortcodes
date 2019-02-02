@@ -147,6 +147,50 @@ Running `node example2` yields:
 Example paragraph\n\n{{> MailchimpForm id="chfk2" <}}
 ```
 
+Say `example3.js` looks as follows:
+
+```javascript
+var unified = require('unified');
+var parse = require('remark-parse');
+var shortcodes = require('remark-shortcodes');
+
+var markdown = 'Example paragraph {{> MailchimpForm id="chfk2" <}}'
+
+var tree = unified()
+  .use(parse)
+  // Plugin inserted below, with custom options for start/end blocks.
+  .use(shortcodes, {startBlock: "{{>", endBlock: "<}}", allowInline: true})
+  // Turn off position output for legibility below.
+  .data('settings', {position: false})
+  .parse(markdown);
+
+console.dir(tree, {depth: null});
+```
+
+Running `node example3` yields:
+
+```json
+{
+  "type": "root",
+  "children": [
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "Example paragraph "
+        },
+        {
+          "type": "shortcode",
+          "identifier": "MailchimpForm",
+          "attributes": { "id": "chfk2" }
+        }
+      ]
+    }
+  ]
+}
+```
+
 ## API
 
 ### `remark.use(shortcodes, {options})`
@@ -155,6 +199,7 @@ Where options support the keys:
 
 - `startBlock`: the start block to look for. Default: `[[`.
 - `endBlock`: the end block to look for. Default: `]]`.
+- `allowInline`: allows shortcodes to be used inline. Default: `false`.
 
 NB: Be careful when using custom start/end blocks, your choices
 may clash with other markdown syntax and/or other remark plugins.
