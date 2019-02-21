@@ -220,7 +220,8 @@ TravisCI releases on tag to npm & github releases.
 
 - Bump version in package.json
 - Commit and tag with version number (`git tag -a v0.1.x -m v0.1.x`)
-- Push
+- git push --tags
+- Travis setup handles the rest
 
 ## License
 
