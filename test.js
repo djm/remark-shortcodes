@@ -83,7 +83,7 @@ test("test inline level shortcode without attributes", function(t) {
       }
     ]
   };
-  tester(t, { allowInline: true }, inputMarkdown, outputMarkdown, ast);
+  tester(t, { inlineMode: true }, inputMarkdown, outputMarkdown, ast);
   t.end();
 });
 
@@ -139,10 +139,10 @@ test("test inline level shortcode with attributes", function(t) {
             value: " Test sentence"
           }
         ]
-      }      
+      }
     ]
   };
-  tester(t, { allowInline: true }, inputMarkdown, outputMarkdown, ast);
+  tester(t, { inlineMode: true }, inputMarkdown, outputMarkdown, ast);
   t.end();
 });
 
@@ -209,7 +209,7 @@ test("test block level shortcode with custom start/end blocks", function(t) {
   };
   tester(
     t,
-    { startBlock: "{{%", endBlock: "%}}", allowInline: true },
+    { startBlock: "{{%", endBlock: "%}}", inlineMode: true },
     inputMarkdown,
     outputMarkdown,
     ast
@@ -274,7 +274,7 @@ test("test multiple inline level shortcodes", function(t) {
       }
     ]
   };
-  tester(t, { allowInline: true }, inputMarkdown, outputMarkdown, ast);
+  tester(t, { inlineMode: true }, inputMarkdown, outputMarkdown, ast);
   t.end();
 });
 

@@ -159,7 +159,7 @@ var markdown = 'Example paragraph {{> MailchimpForm id="chfk2" <}}'
 var tree = unified()
   .use(parse)
   // Plugin inserted below, with custom options for start/end blocks.
-  .use(shortcodes, {startBlock: "{{>", endBlock: "<}}", allowInline: true})
+  .use(shortcodes, {startBlock: "{{>", endBlock: "<}}", inlineMode: true})
   // Turn off position output for legibility below.
   .data('settings', {position: false})
   .parse(markdown);
@@ -199,7 +199,7 @@ Where options support the keys:
 
 - `startBlock`: the start block to look for. Default: `[[`.
 - `endBlock`: the end block to look for. Default: `]]`.
-- `allowInline`: allows shortcodes to be used inline. Default: `false`.
+- `inlineMode`: shortcodes will be parsed inline rather than in block mode. Default: `false`.
 
 NB: Be careful when using custom start/end blocks, your choices
 may clash with other markdown syntax and/or other remark plugins.
