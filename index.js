@@ -43,15 +43,15 @@ module.exports = shortcodes;
 function shortcodes(options) {
   var startBlock = (options || {}).startBlock || "[[";
   var endBlock = (options || {}).endBlock || "]]";
+  var inlineMode = (options || {}).inlineMode || false;
 
   if (isRemarkParser(this.Parser)) {
     var parser = this.Parser.prototype;
-    parser.blockTokenizers.shortcode = shortcodeTokenizer;
-    parser.blockMethods.splice(
-      parser.blockMethods.indexOf("html"),
-      0,
-      "shortcode"
-    );
+    var tokenizers = inlineMode ? parser.inlineTokenizers : parser.blockTokenizers;
+    var methods = inlineMode ? parser.inlineMethods : parser.blockMethods;
+
+    tokenizers.shortcode = shortcodeTokenizer;
+    methods.splice(methods.indexOf("html"), 0, "shortcode");
   }
   if (isRemarkCompiler(this.Compiler)) {
     var compiler = this.Compiler.prototype;
