@@ -5,3 +5,6 @@
 ## Contributors
 
 [Christian Murphy](https://github.com/ChristianMurphy)
+[Jean Saad](https://github.com/jeansaad) - inline support
+
+
