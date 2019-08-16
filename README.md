@@ -1,4 +1,4 @@
-# remark-shortcodes [![NPM Package][npm-package-badge]][npm-package] [![Build Status][travis-badge]][travis] [![Coverage Status][codecov-badge]][codecov]
+# remark-shortcodes [![NPM Package][npm-package-badge]][npm-package] [![Coverage Status][codecov-badge]][codecov]
 
 A custom Markdown syntax parser for [**remark**][remark] that adds support for shortcodes.
 
