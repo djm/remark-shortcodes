@@ -240,10 +240,6 @@ With thanks to [woorm][woorm] et. al for [**remark**][remark].
 
 [npm-package]: https://www.npmjs.org/package/remark-shortcodes
 
-[travis-badge]: https://img.shields.io/travis/djm/remark-shortcodes/master.svg
-
-[travis]: https://travis-ci.org/djm/remark-shortcodes
-
 [codecov-badge]: https://img.shields.io/codecov/c/github/djm/remark-shortcodes.svg
 
 [codecov]: https://codecov.io/github/djm/remark-shortcodes
