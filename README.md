@@ -216,12 +216,17 @@ To run build, tests & coverage, run:
 
 ## Releasing
 
-TravisCI releases on tag to npm & github releases.
+Prepare the commits:
 
-- Bump version in package.json
-- Commit and tag with version number (`git tag -a v0.1.x -m v0.1.x`)
-- git push --tags
-- Travis setup handles the rest
+- Bump all version numbers.
+- Tag the commit: `git tag -a v0.1.x -m v0.1.x`
+- Push tag to Github: `git push --tags`
+
+Publish to npm:
+
+- Ensure tag is checked-out: `git checkout tags/v0.1.x`
+- Login to NPM via the CLI: `npm login`
+- Publish the package: `npm publish`
 
 ## License
 
