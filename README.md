@@ -213,6 +213,8 @@ To run the tests, run:
 To run build, tests & coverage, run:
 
     npm run test
+    
+CI is set up on push via a Github Action, see [workflows/nodejs.yml](https://github.com/djm/remark-shortcodes/blob/master/.github/workflows/nodejs.yml).
 
 ## Releasing
 
