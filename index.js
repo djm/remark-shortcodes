@@ -158,19 +158,20 @@ function parseShortcodeAttributes(attributeString) {
   var attributes = {};
   var attrMatch = attributeString
     .trim()
-    .match(/(?:[\w-]*=\s*(?:(?:"[^"]*")|(?:'[^']*')|[^}\s]+))/g);
+    .matchAll(/([\w-]+)(?:=)?((?:"[^"]*")|(?:'[^']*')|[^\s]+)?/g);
 
   if (attrMatch) {
-    attrMatch.map(function(item) {
-      var split = item.split("=");
-      var key = split.shift().trim();
-      // Strip surrounding quotes from value, if they exist.
-      var val = split
-        .join("=")
-        .trim()
-        .replace(/^"(.*)"$/, "$1");
+    for (let match of attrMatch) {
+      var key = match[1];
+
+      if (match[2] !== undefined) {
+        var val = match[2].trim().replace(/^"(.*)"$/, "$1");
+      } else {
+        var val = undefined;
+      }
+
       attributes[key] = val;
-    });
+    }
   }
   return attributes;
 }
