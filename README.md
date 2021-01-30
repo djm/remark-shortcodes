@@ -2,6 +2,9 @@
 
 A custom Markdown syntax parser for [**remark**][remark] that adds support for shortcodes.
 
+**NB(2021): This package does not work with Remark v13+ due to its parser changes.**
+**If you would like to fix that, please [see this issue](https://github.com/djm/remark-shortcodes/issues/19).**
+
 **_What are shortcodes?_** They are a way to provide hooks for macros and/or
 template partials inside a markdown file. They consist of start & end blocks,
 in between which the shortcode has a name defined and an optional set of
@@ -213,7 +216,7 @@ To run the tests, run:
 To run build, tests & coverage, run:
 
     npm run test
-    
+
 CI is set up on push via a Github Action, see [workflows/nodejs.yml](https://github.com/djm/remark-shortcodes/blob/master/.github/workflows/nodejs.yml).
 
 ## Releasing
