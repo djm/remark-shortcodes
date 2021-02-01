@@ -7,7 +7,7 @@ A custom Markdown syntax parser for [**remark**][remark] that adds support for s
 This package does not work with Remark v13+ due to its parser changes:
 
 * If you would like to fix that, please [see this issue](https://github.com/djm/remark-shortcodes/issues/19).**
-* If you would like similiar functionality but with a different syntax - see the core-maintained `[remark-directive](https://github.com/remarkjs/remark-directive)` project.
+* If you would like similiar functionality but with a different syntax - see the core-maintained [`remark-directive`](https://github.com/remarkjs/remark-directive) project.
 
 ## Summary
 
