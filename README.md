@@ -2,8 +2,14 @@
 
 A custom Markdown syntax parser for [**remark**][remark] that adds support for shortcodes.
 
-**NB(2021): This package does not work with Remark v13+ due to its parser changes.**
-**If you would like to fix that, please [see this issue](https://github.com/djm/remark-shortcodes/issues/19).**
+## Update, January 2021
+
+This package does not work with Remark v13+ due to its parser changes:
+
+* If you would like to fix that, please [see this issue](https://github.com/djm/remark-shortcodes/issues/19).**
+* If you would like similiar functionality but with a different syntax - see the core-maintained `[remark-directive](https://github.com/remarkjs/remark-directive)` project.
+
+## Summary
 
 **_What are shortcodes?_** They are a way to provide hooks for macros and/or
 template partials inside a markdown file. They consist of start & end blocks,
